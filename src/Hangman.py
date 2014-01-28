@@ -12,6 +12,8 @@ class MainWindow(gui.MainWindow):
 
         self.Words = ("black", "blue", "white", "red", "green", "yellow", "purple", "pink", "gray", "orange")
 
+        self._ClearStats()
+
         self.StartNewGame()
 
         self.SetFocus()
@@ -27,7 +29,7 @@ class MainWindow(gui.MainWindow):
 
         self._EnableButtons()
         self.m_word.SetForegroundColour('BLACK')
-        
+                
     def LetterButtonClicked( self, event ):
         button = event.GetEventObject()
         letter = button.Label
@@ -35,6 +37,9 @@ class MainWindow(gui.MainWindow):
         self._HandleCharLetter(letter)
     
     def NewGameButtonClicked( self, event ):
+        if self.Word != self.HiddenWord:
+            self._StatsRecordLoose()
+
         self.StartNewGame()
 
     def LoadButtonClicked( self, event ):
@@ -48,7 +53,9 @@ class MainWindow(gui.MainWindow):
             for line in f.readlines():
                 self.Words.append(line.strip())
         
+        self._ClearStats()
         self.StartNewGame()
+        self.SetFocus()
 
     def OnChar(self, event):
         keycode = event.GetUnicodeKey()
@@ -74,6 +81,7 @@ class MainWindow(gui.MainWindow):
             self._ShowChars(letter)
             
             if self.HiddenWord == self.Word:
+                self._StatsRecordWin()
                 self.m_word.SetForegroundColour('GREEN')
                 self._DisableButtons()
         else:
@@ -81,7 +89,9 @@ class MainWindow(gui.MainWindow):
             self.m_gauge_lives.SetValue(self.Lives)
             
             if self.Lives == 0:
+                self._StatsRecordLoose()
                 self.m_word.SetValue(self.Word)
+                self.HiddenWord = self.Word
                 self.m_word.SetForegroundColour('RED')
                 self.m_word.Refresh()
                 self._DisableButtons()
@@ -108,6 +118,33 @@ class MainWindow(gui.MainWindow):
                 hidden += "*"
 
         return hidden
+
+    def _ClearStats(self):
+        self.StatGames = 0
+        self.StatWins = 0
+        self.StatLoses = 0
+        
+        self._RefreshStats()
+        
+    def _StatsRecordWin(self):
+        self.StatGames += 1
+        self.StatWins += 1
+        self._RefreshStats()
+
+    def _StatsRecordLoose(self):
+        self.StatGames += 1
+        self.StatLoses += 1
+        self._RefreshStats()
+
+    def _RefreshStats(self):
+        self.m_gamesPlayed.SetLabel(str(self.StatGames))
+        self.m_gamesWon.SetLabel(str(self.StatWins))
+        self.m_gamesLost.SetLabel(str(self.StatLoses))
+
+        if self.StatGames > 0:
+            self.m_successPercent.SetLabel(str( int(100.0 * self.StatWins / self.StatGames) ))
+        else:
+            self.m_successPercent.SetLabel('0')
 
     def _DisableButtonByLetter(self, letter):
         letter = letter.upper()

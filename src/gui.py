@@ -127,6 +127,61 @@ class MainWindow ( wx.Frame ):
 		
 		bSizer1.Add( sbSizer1, 0, wx.EXPAND, 5 )
 		
+		sbSizer2 = wx.StaticBoxSizer( wx.StaticBox( self, wx.ID_ANY, u"Statistics" ), wx.VERTICAL )
+		
+		bSizer2 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText1 = wx.StaticText( self, wx.ID_ANY, u"Games played:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText1.Wrap( -1 )
+		bSizer2.Add( self.m_staticText1, 0, wx.ALL, 5 )
+		
+		self.m_gamesPlayed = wx.StaticText( self, wx.ID_ANY, u"XX", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_gamesPlayed.Wrap( -1 )
+		bSizer2.Add( self.m_gamesPlayed, 0, wx.ALL, 5 )
+		
+		
+		bSizer2.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.m_staticText2 = wx.StaticText( self, wx.ID_ANY, u"Games won", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText2.Wrap( -1 )
+		bSizer2.Add( self.m_staticText2, 0, wx.ALL, 5 )
+		
+		self.m_gamesWon = wx.StaticText( self, wx.ID_ANY, u"XX", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_gamesWon.Wrap( -1 )
+		bSizer2.Add( self.m_gamesWon, 0, wx.ALL, 5 )
+		
+		
+		bSizer2.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.m_staticText5 = wx.StaticText( self, wx.ID_ANY, u"Games lost", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText5.Wrap( -1 )
+		bSizer2.Add( self.m_staticText5, 0, wx.ALL, 5 )
+		
+		self.m_gamesLost = wx.StaticText( self, wx.ID_ANY, u"XX", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_gamesLost.Wrap( -1 )
+		bSizer2.Add( self.m_gamesLost, 0, wx.ALL, 5 )
+		
+		
+		bSizer2.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.m_staticText7 = wx.StaticText( self, wx.ID_ANY, u"Succes percentage", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText7.Wrap( -1 )
+		bSizer2.Add( self.m_staticText7, 0, wx.ALL, 5 )
+		
+		self.m_successPercent = wx.StaticText( self, wx.ID_ANY, u"XX", wx.DefaultPosition, wx.Size( 25,-1 ), wx.ALIGN_RIGHT )
+		self.m_successPercent.Wrap( -1 )
+		bSizer2.Add( self.m_successPercent, 0, wx.TOP|wx.BOTTOM|wx.LEFT, 5 )
+		
+		self.m_staticText9 = wx.StaticText( self, wx.ID_ANY, u"%", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText9.Wrap( -1 )
+		bSizer2.Add( self.m_staticText9, 0, wx.TOP|wx.BOTTOM|wx.RIGHT, 5 )
+		
+		
+		sbSizer2.Add( bSizer2, 1, wx.EXPAND, 5 )
+		
+		
+		bSizer1.Add( sbSizer2, 0, wx.EXPAND, 5 )
+		
 		gSizer3 = wx.GridSizer( 1, 2, 0, 0 )
 		
 		self.m_btn_newGame = wx.Button( self, wx.ID_ANY, u"New Game", wx.DefaultPosition, wx.DefaultSize, 0 )
