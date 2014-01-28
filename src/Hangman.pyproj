@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>c366664c-f19c-4470-8397-270bd5542449</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Hangman.py</StartupFile>
+    <StartupFile>launcher.pyw</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -27,6 +27,7 @@
   <ItemGroup>
     <Compile Include="gui.py" />
     <Compile Include="Hangman.py" />
+    <Compile Include="launcher.pyw" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\2.7" />
