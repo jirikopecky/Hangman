@@ -120,9 +120,37 @@ class MainWindow ( wx.Frame ):
 		
 		sbSizer1 = wx.StaticBoxSizer( wx.StaticBox( self, wx.ID_ANY, u"Lives" ), wx.VERTICAL )
 		
+		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
+		
 		self.m_gauge_lives = wx.Gauge( self, wx.ID_ANY, 6, wx.DefaultPosition, wx.DefaultSize, wx.GA_HORIZONTAL )
 		self.m_gauge_lives.SetValue( 6 ) 
-		sbSizer1.Add( self.m_gauge_lives, 1, wx.ALL|wx.EXPAND, 5 )
+		bSizer4.Add( self.m_gauge_lives, 1, wx.EXPAND|wx.BOTTOM|wx.RIGHT|wx.LEFT, 5 )
+		
+		bSizer5 = wx.BoxSizer( wx.VERTICAL )
+		
+		
+		bSizer5.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_livesCount = wx.StaticText( self, wx.ID_ANY, u"6", wx.DefaultPosition, wx.Size( 15,-1 ), wx.ALIGN_CENTRE )
+		self.m_livesCount.Wrap( -1 )
+		bSizer6.Add( self.m_livesCount, 0, wx.ALL, 5 )
+		
+		self.m_spinBtn1 = wx.SpinButton( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 20,-1 ), 0 )
+		bSizer6.Add( self.m_spinBtn1, 1, wx.EXPAND, 5 )
+		
+		
+		bSizer5.Add( bSizer6, 0, 0, 5 )
+		
+		
+		bSizer5.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		
+		bSizer4.Add( bSizer5, 0, wx.EXPAND, 5 )
+		
+		
+		sbSizer1.Add( bSizer4, 1, wx.EXPAND, 5 )
 		
 		
 		bSizer1.Add( sbSizer1, 0, wx.EXPAND, 5 )
@@ -226,6 +254,8 @@ class MainWindow ( wx.Frame ):
 		self.m_btn_Key23.Bind( wx.EVT_BUTTON, self.LetterButtonClicked )
 		self.m_btn_Key24.Bind( wx.EVT_BUTTON, self.LetterButtonClicked )
 		self.m_btn_Key25.Bind( wx.EVT_BUTTON, self.LetterButtonClicked )
+		self.m_spinBtn1.Bind( wx.EVT_SPIN_DOWN, self.OnLivesDown )
+		self.m_spinBtn1.Bind( wx.EVT_SPIN_UP, self.OnLivesUp )
 		self.m_btn_newGame.Bind( wx.EVT_BUTTON, self.NewGameButtonClicked )
 		self.m_btn_Load.Bind( wx.EVT_BUTTON, self.LoadButtonClicked )
 	
@@ -261,6 +291,12 @@ class MainWindow ( wx.Frame ):
 	
 	
 	
+	
+	def OnLivesDown( self, event ):
+		event.Skip()
+	
+	def OnLivesUp( self, event ):
+		event.Skip()
 	
 	def NewGameButtonClicked( self, event ):
 		event.Skip()

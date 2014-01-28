@@ -22,7 +22,7 @@ class MainWindow(gui.MainWindow):
         self.Word = self._GetRandomWord()
         self.HiddenWord = self._GetHiddenWord(self.Word)
         
-        self.Lives = 6
+        self.Lives = int(self.m_livesCount.GetLabel())
         self.m_word.SetValue(self.HiddenWord)
         self.m_gauge_lives.SetRange(self.Lives)
         self.m_gauge_lives.SetValue(self.Lives)
@@ -48,14 +48,36 @@ class MainWindow(gui.MainWindow):
         if dialog.ShowModal() == wx.ID_CANCEL:
             return
 
-        self.Words = []
+        words = []
         with open(dialog.GetPath()) as f:
             for line in f.readlines():
-                self.Words.append(line.strip())
-        
-        self._ClearStats()
-        self.StartNewGame()
-        
+                words.append(line.strip().upper())
+
+        if len(words) > 0:
+            self.Words = words
+            self._ClearStats()
+            self.StartNewGame()
+        else:
+            dlg = wx.MessageDialog(self, "File was empty, word set not changed.", "Information", wx.OK | wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+
+    def OnLivesDown( self, event ):
+        lives = int(self.m_livesCount.GetLabelText())
+
+        if lives > 1:
+            self.m_livesCount.SetLabel(str(lives - 1))
+            self._ClearStats()
+            self.StartNewGame()
+
+    def OnLivesUp( self, event ):
+        lives = int(self.m_livesCount.GetLabelText())
+
+        if lives < 6:
+            self.m_livesCount.SetLabel(str(lives + 1))
+            self._ClearStats()
+            self.StartNewGame()
+
     def HandleKeyPressed(self, key):
         if key == "Ctrl+N":
             self.StartNewGame()
@@ -67,11 +89,14 @@ class MainWindow(gui.MainWindow):
             self._HandleCharLetter(key.upper())
 
     def _GetRandomWord(self):
-        word = random.choice(self.Words).upper()
-        while word==self.Word:
+        if len(self.Words) > 1:
             word = random.choice(self.Words).upper()
+            while word==self.Word:
+                word = random.choice(self.Words).upper()
 
-        return word
+            return word
+        else:
+            return self.Words[0]
 
     def _HandleCharLetter(self, letter):
         self._DisableButtonByLetter(letter)
