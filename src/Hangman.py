@@ -44,7 +44,7 @@ class MainWindow(gui.MainWindow):
             return
 
         self.Words = []
-        with open(dialog.GetFilename()) as f:
+        with open(dialog.GetPath()) as f:
             for line in f.readlines():
                 self.Words.append(line.strip())
         
