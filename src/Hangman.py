@@ -11,6 +11,7 @@ class MainWindow(gui.MainWindow):
         self.Center()
 
         self.Words = ("black", "blue", "white", "red", "green", "yellow", "purple", "pink", "gray", "orange")
+        self.Word = ""
 
         self._ClearStats()
 
@@ -19,8 +20,8 @@ class MainWindow(gui.MainWindow):
         self.SetFocus()
                 
     def StartNewGame(self):
-        self.Word = random.choice(self.Words).upper()
-        self.HiddenWord = self._GetHiddenWord()
+        self.Word = self._GetRandomWord()
+        self.HiddenWord = self._GetHiddenWord(self.Word)
         
         self.Lives = 6
         self.m_word.SetValue(self.HiddenWord)
@@ -74,6 +75,13 @@ class MainWindow(gui.MainWindow):
             char = chr(keycode).upper()
             self._HandleCharLetter(char)
 
+    def _GetRandomWord(self):
+        word = random.choice(self.Words).upper()
+        while word==self.Word:
+            word = random.choice(self.Words).upper()
+
+        return word
+
     def _HandleCharLetter(self, letter):
         self._DisableButtonByLetter(letter)
 
@@ -108,11 +116,11 @@ class MainWindow(gui.MainWindow):
         self.HiddenWord = newWord
         self.m_word.SetValue(self.HiddenWord)
 
-    def _GetHiddenWord(self):
+    def _GetHiddenWord(self, word):
         hidden = ""
 
-        for i in range(0, len(self.Word)):
-            if self.Word[i] == " ":
+        for i in range(0, len(word)):
+            if word[i] == " ":
                 hidden += " "
             else:
                 hidden += "*"
