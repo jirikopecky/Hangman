@@ -145,6 +145,7 @@ class MainWindow ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
+		self.Bind( wx.EVT_CHAR, self.OnChar )
 		self.m_btn_Key0.Bind( wx.EVT_BUTTON, self.LetterButtonClicked )
 		self.m_btn_Key1.Bind( wx.EVT_BUTTON, self.LetterButtonClicked )
 		self.m_btn_Key2.Bind( wx.EVT_BUTTON, self.LetterButtonClicked )
@@ -179,6 +180,9 @@ class MainWindow ( wx.Frame ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
+	def OnChar( self, event ):
+		event.Skip()
+	
 	def LetterButtonClicked( self, event ):
 		event.Skip()
 	

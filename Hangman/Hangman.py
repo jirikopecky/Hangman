@@ -13,6 +13,8 @@ class MainWindow(gui.MainWindow):
         self.Words = ("black", "blue", "white", "red", "green", "yellow", "purple", "pink", "gray", "orange")
 
         self.StartNewGame()
+
+        self.SetFocus()
                 
     def StartNewGame(self):
         self.Word = random.choice(self.Words).upper()
@@ -30,23 +32,7 @@ class MainWindow(gui.MainWindow):
         button = event.GetEventObject()
         letter = button.Label
         
-        button.Disable()
-
-        if letter in self.Word:
-            self._ShowChars(letter)
-            
-            if self.HiddenWord == self.Word:
-                self.m_word.SetForegroundColour('GREEN')
-                self._DisableButtons()
-        else:
-            self.Lives -= 1
-            self.m_gauge_lives.SetValue(self.Lives)
-            
-            if self.Lives == 0:
-                self.m_word.SetValue(self.Word)
-                self.m_word.SetForegroundColour('RED')
-                self.m_word.Refresh()
-                self._DisableButtons()
+        self._HandleCharLetter(letter)
     
     def NewGameButtonClicked( self, event ):
         self.StartNewGame()
@@ -63,6 +49,42 @@ class MainWindow(gui.MainWindow):
                 self.Words.append(line.strip())
         
         self.StartNewGame()
+
+    def OnChar(self, event):
+        keycode = event.GetUnicodeKey()
+
+        if keycode != wx.WXK_NONE:
+            if keycode == wx.WXK_CONTROL_N:
+                self.StartNewGame()
+                return
+            elif keycode == wx.WXK_CONTROL_O:
+                self.LoadButtonClicked(None)
+                return
+            elif keycode == wx.WXK_CONTROL_X:
+                self.Close()
+                return
+
+            char = chr(keycode).upper()
+            self._HandleCharLetter(char)
+
+    def _HandleCharLetter(self, letter):
+        self._DisableButtonByLetter(letter)
+
+        if letter in self.Word:
+            self._ShowChars(letter)
+            
+            if self.HiddenWord == self.Word:
+                self.m_word.SetForegroundColour('GREEN')
+                self._DisableButtons()
+        else:
+            self.Lives -= 1
+            self.m_gauge_lives.SetValue(self.Lives)
+            
+            if self.Lives == 0:
+                self.m_word.SetValue(self.Word)
+                self.m_word.SetForegroundColour('RED')
+                self.m_word.Refresh()
+                self._DisableButtons()
 
     def _ShowChars(self, char):
         newWord = ""
@@ -86,6 +108,62 @@ class MainWindow(gui.MainWindow):
                 hidden += "*"
 
         return hidden
+
+    def _DisableButtonByLetter(self, letter):
+        letter = letter.upper()
+
+        if letter=="A":
+            self.m_btn_Key0.Disable()
+        elif letter=="B":
+            self.m_btn_Key1.Disable()
+        elif letter=="C":
+            self.m_btn_Key2.Disable()
+        elif letter=="D":
+            self.m_btn_Key3.Disable()
+        elif letter=="E":
+            self.m_btn_Key4.Disable()
+        elif letter=="F":
+            self.m_btn_Key5.Disable()
+        elif letter=="G":
+            self.m_btn_Key6.Disable()
+        elif letter=="H":
+            self.m_btn_Key7.Disable()
+        elif letter=="I":
+            self.m_btn_Key8.Disable()
+        elif letter=="J":
+            self.m_btn_Key9.Disable()
+        elif letter=="K":
+            self.m_btn_Key10.Disable()
+        elif letter=="L":
+            self.m_btn_Key11.Disable()
+        elif letter=="M":
+            self.m_btn_Key12.Disable()
+        elif letter=="N":
+            self.m_btn_Key13.Disable()
+        elif letter=="O":
+            self.m_btn_Key14.Disable()
+        elif letter=="P":
+            self.m_btn_Key15.Disable()
+        elif letter=="Q":
+            self.m_btn_Key16.Disable()
+        elif letter=="R":
+            self.m_btn_Key17.Disable()
+        elif letter=="S":
+            self.m_btn_Key18.Disable()
+        elif letter=="T":
+            self.m_btn_Key19.Disable()
+        elif letter=="U":
+            self.m_btn_Key20.Disable()
+        elif letter=="V":
+            self.m_btn_Key21.Disable()
+        elif letter=="W":
+            self.m_btn_Key22.Disable()
+        elif letter=="X":
+            self.m_btn_Key23.Disable()
+        elif letter=="Y":
+            self.m_btn_Key24.Disable()
+        elif letter=="Z":
+            self.m_btn_Key25.Disable()
 
     def _DisableButtons(self):
         self.m_btn_Key0.Disable()
@@ -155,4 +233,4 @@ def main():
     app.MainLoop()
  
 if __name__ == '__main__':
-    main()
+    main()
