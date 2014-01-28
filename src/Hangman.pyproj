@@ -27,6 +27,7 @@
   <ItemGroup>
     <Compile Include="gui.py" />
     <Compile Include="Hangman.py" />
+    <Compile Include="keyboard.py" />
     <Compile Include="launcher.pyw" />
   </ItemGroup>
   <ItemGroup>

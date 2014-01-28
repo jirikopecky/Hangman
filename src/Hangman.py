@@ -4,6 +4,7 @@
 import wx
 import gui
 import random
+import keyboard
 
 class MainWindow(gui.MainWindow):
     def __init__(self, parent=None):
@@ -16,8 +17,6 @@ class MainWindow(gui.MainWindow):
         self._ClearStats()
 
         self.StartNewGame()
-
-        self.SetFocus()
                 
     def StartNewGame(self):
         self.Word = self._GetRandomWord()
@@ -56,24 +55,16 @@ class MainWindow(gui.MainWindow):
         
         self._ClearStats()
         self.StartNewGame()
-        self.SetFocus()
-
-    def OnChar(self, event):
-        keycode = event.GetUnicodeKey()
-
-        if keycode != wx.WXK_NONE:
-            if keycode == wx.WXK_CONTROL_N:
-                self.StartNewGame()
-                return
-            elif keycode == wx.WXK_CONTROL_O:
-                self.LoadButtonClicked(None)
-                return
-            elif keycode == wx.WXK_CONTROL_X:
-                self.Close()
-                return
-
-            char = chr(keycode).upper()
-            self._HandleCharLetter(char)
+        
+    def HandleKeyPressed(self, key):
+        if key == "Ctrl+N":
+            self.StartNewGame()
+        elif key == "Ctrl+O":
+            self.LoadButtonClicked(None)
+        elif key == "Ctrl+X":
+            self.Close()
+        elif len(key) == 1 and key.upper() in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+            self._HandleCharLetter(key.upper())
 
     def _GetRandomWord(self):
         word = random.choice(self.Words).upper()
@@ -271,7 +262,15 @@ class App(wx.App):
         self.frame = MainWindow()
         self.frame.Show()
         self.SetTopWindow(self.frame)
+        self.SetCallFilterEvent(True)
         return True
+
+    def FilterEvent(self, evt):
+        if evt.GetEventType() == wx.wxEVT_KEY_DOWN:
+            #print keyboard.GetKeyPress(evt)
+            self.frame.HandleKeyPressed(keyboard.GetKeyPress(evt))
+        else:
+            evt.Skip()
 
 def main():
     app = App(0)
