@@ -287,15 +287,15 @@ class App(wx.App):
         self.frame = MainWindow()
         self.frame.Show()
         self.SetTopWindow(self.frame)
-        self.SetCallFilterEvent(True)
         return True
 
     def FilterEvent(self, evt):
         if evt.GetEventType() == wx.wxEVT_KEY_DOWN:
             #print keyboard.GetKeyPress(evt)
             self.frame.HandleKeyPressed(keyboard.GetKeyPress(evt))
+            return self.Event_Processed
         else:
-            evt.Skip()
+            return self.Event_Skip
 
 def main():
     app = App(0)
